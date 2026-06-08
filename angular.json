@@ -24,7 +24,18 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/hosting-demo",
+
+
+
+
+						"outputPath": {
+							"base": "docs",
+							"browser": ""
+						},
+
+
+
+
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
