@@ -1,0 +1,38 @@
+name: Angular build and deploy to gh-pages
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repository letöltése
+        uses: actions/checkout@v4
+
+      - name: Node.js beállítása
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Függőségek telepítése
+        run: npm ci
+
+      - name: Angular build futtatása
+        run: npx ng build
+
+      - name: .nojekyll létrehozása
+        run: touch docs/.nojekyll
+
+      - name: Deploy gh-pages branch-re
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          publish_branch: gh-pages
